@@ -10,14 +10,14 @@ The annotation accepts an arbitary message, if none provided, the default messag
 When source compiles, the compiler generates warning messages using the annotation message and the marked element type.
 
 <code>
-      Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] :  
-      CLASS level => WTF?! Are you for real?! This naming convention is bad!
+   Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
+   CLASS level => WTF?! Are you for real?! This naming convention is bad!
    
-      Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
-      FIELD 'SOME_CONSTANT' => WTF?! What is this non-descriptive name?
-      
-      Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
-      CONSTRUCTOR 'DummyPojoImpl(java.lang.String)' => WTF?! Dude.. WTF?!
+   Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
+   FIELD 'SOME_CONSTANT' => WTF?! What is this non-descriptive name?
+   
+   Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
+   CONSTRUCTOR 'DummyPojoImpl(java.lang.String)' => WTF?! Dude.. WTF?!
 </code>
 
 The library also provides custom JUnit test runner scan for all WTFs for a given top level package name and generates
