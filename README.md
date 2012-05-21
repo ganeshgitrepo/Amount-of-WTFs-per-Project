@@ -1,16 +1,16 @@
 Amount of WTFs per Project
 ==========================
-This library is a by-product that derived from what I was doing few days ago. I was dabbling with Java and
-was not planning to create anything.
+This library is a by-product that derived from what I was doing few days ago:
 
-I came across a well know image that depicts code review session behind closed doors. The image 
-called "The only valid measurement of code quality: WTF/minute". I tried to make an extension to the latter.
+I was dabbling with Java and decided to take a break. I came across a well know image that 
+depicts code review session behind closed doors. The image called "The only valid measurement of code 
+quality: WTF/minute". I decided to make an extension to the latter concept.
 
 This library brings you the ability to mark code smells in your source code (Classes, methods, fields etc.) 
-with 'WTF' annotation. When source compiles, the compiler generates warning messages using the annotation 
-message and the marked element type. The WTF annotation accepts an arbitary message, if none provided, the default 
-message 'Dude.. WTF?!' is used instead. The following is a sample output from compiling a class containing WTF
-annotations:
+with 'WTF' annotation. The WTF annotation accepts an arbitary message, if none provided, the default
+message 'Dude.. WTF?!' is used instead. When source compiles, the compiler generates a warning using the message from detected 
+annotation(s) and information about marked element type. The following is a sample output from compiling a class 
+containing WTF annotations:
 
 	Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] :
 	CLASS level => WTF?! Are you for real?! This naming convention is bad!
