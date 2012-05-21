@@ -1,13 +1,16 @@
 Amount of WTFs per Project
 ==========================
-We all (or some of us) know the funny image depicting code review session behind closed doors.
-The image called "The only valid measurement of code quality: WTF/minute". 
+This library is a by-product that derived from what I was doing few days ago. I was dabbling with Java and
+was not planning to create anything.
 
-This library is a by-product that derived from what I was doing few days ago. It brings you the
-ability to mark code smells in your source code (Classes, methods, fields etc.) with 'WTF' annotation.
-The annotation accepts an arbitary message, if none provided, the default message 'Dude.. WTF?!' is used instead.
+I came across a well know image that depicts code review session behind closed doors. The image 
+called "The only valid measurement of code quality: WTF/minute". I tried to make an extension to the latter.
 
-When source compiles, the compiler generates warning messages using the annotation message and the marked element type.
+This library brings you the ability to mark code smells in your source code (Classes, methods, fields etc.) 
+with 'WTF' annotation. When source compiles, the compiler generates warning messages using the annotation 
+message and the marked element type. The WTF annotation accepts an arbitary message, if none provided, the default 
+message 'Dude.. WTF?!' is used instead. The following is a sample output from compiling a class containing WTF
+annotations:
 
 	Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] :
 	CLASS level => WTF?! Are you for real?! This naming convention is bad!
@@ -16,8 +19,13 @@ When source compiles, the compiler generates warning messages using the annotati
 	Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] :
 	CONSTRUCTOR 'DummyPojoImpl(java.lang.String)' => WTF?! Dude.. WTF?!
 
-The library also provides custom JUnit test runner scan for all WTFs for a given top level package name and generates
-metrics how many WTFs are there and where. For example, the following is the example of the custom JUnit runner:
+The library also provides a custom JUnit test runner class. The runner takes a package name through @ScanPackage
+annotation and scans all classes/interfaces under the package for WTFs occurances. The runner uses a test class 
+internally to assert whether the code is still infested with WTFs. 
+
+If assertion fails (WTFs found present in the code), the test class generates metrics about how many WTFs are there 
+and where. These metrics are part of the assertion failure message. For example, the following is the example of 
+the custom JUnit runner:
 
 	@RunWith(WTFsPerProject.class) 
 	@ScanPackage("wtf.per.project")
@@ -25,7 +33,7 @@ metrics how many WTFs are there and where. For example, the following is the exa
 	
 	}
 
-I had some POJOs marked with WTF annoation, so the following  is the produced output:
+I have few POJOs marked with WTF annoation, so the following is the produced output after running the above class:
 
 	junit.framework.AssertionFailedError:
 	Dude.. WTF!? Sources in package [wtf.per.project] are infested with [15] WTFs:
@@ -45,6 +53,10 @@ I had some POJOs marked with WTF annoation, so the following  is the produced ou
 	wtf.per.project.model.DummyPojoImpl.someAbstractMethod()
 	wtf.per.project.model.DummyPojoImpl.somePrivateMethod() 
 	expected:<0> but was:<15>
+
+Disclaimer
+----------
+I created this library for fun. Nothing more. If someone actually decides to use it - great.
 
 Dependencies
 ------------
@@ -73,6 +85,3 @@ How to add support into your application
 ----------------------------------------
 Just add the wtf-per-project-x.x-jar-with-dependencies.jar to your classpath and start annotating your source code away.
 
-Disclaimer                                                                                                              
-----------
-I created this library for fun. Nothing more. If someone actually decides to use it - great.
