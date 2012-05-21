@@ -11,11 +11,9 @@ When source compiles, the compiler generates warning messages using the annotati
 
 <code>
 	Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
-	CLASS level => WTF?! Are you for real?! This naming convention is bad!
-	
+	CLASS level => WTF?! Are you for real?! This naming convention is bad!	
 	Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
 	FIELD 'SOME_CONSTANT' => WTF?! What is this non-descriptive name?
-	
 	Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
 	CONSTRUCTOR 'DummyPojoImpl(java.lang.String)' => WTF?! Dude.. WTF?!
 </code>
@@ -26,32 +24,30 @@ metrics how many WTFs are there and where. For example, the following is the exa
 <code>
 	@RunWith(WTFsPerProject.class)  
 	@ScanPackage("wtf.per.project")  
-	public final class WTFsPerProjectRunner {  
-						
-	}  
+	public final class WTFsPerProjectRunner {  }  
 </code>
 
 I had some POJOs marked with WTF annoation, so the following  is the produced output:
 
 <code>
-	junit.framework.AssertionFailedError:  
-   Dude.. WTF!? Sources in package [wtf.per.project] are infested with [15] WTFs:  
-   wtf.per.project.model.DummyPojo  
-   wtf.per.project.model.DummyPojo.someInterfaceMethod()  
-   wtf.per.project.model.DummyPojoChild.<init>(java.lang.String)  
-   wtf.per.project.model.DummyPojoChild.someAbstractMethod()  
-   wtf.per.project.model.DummyPojoChild.thisIsPrivateStaticMethod()  
-   wtf.per.project.model.DummyPojoImpl  
-   wtf.per.project.model.DummyPojoImpl.<init>()  
-   wtf.per.project.model.DummyPojoImpl.<init>(java.lang.Integer)  
-   wtf.per.project.model.DummyPojoImpl.<init>(java.lang.String)  
-   wtf.per.project.model.DummyPojoImpl.SOME_CONSTANT  
-   wtf.per.project.model.DummyPojoImpl.getName()  
-   wtf.per.project.model.DummyPojoImpl.name  
-   wtf.per.project.model.DummyPojoImpl.setName(java.lang.String)  
-   wtf.per.project.model.DummyPojoImpl.someAbstractMethod()  
-   wtf.per.project.model.DummyPojoImpl.somePrivateMethod()  
-   expected:<0> but was:<15>  
+	junit.framework.AssertionFailedError:
+	Dude.. WTF!? Sources in package [wtf.per.project] are infested with [15] WTFs:
+	wtf.per.project.model.DummyPojo
+	wtf.per.project.model.DummyPojo.someInterfaceMethod()
+	wtf.per.project.model.DummyPojoChild.<init>(java.lang.String)
+	wtf.per.project.model.DummyPojoChild.someAbstractMethod()  
+	wtf.per.project.model.DummyPojoChild.thisIsPrivateStaticMethod()  
+	wtf.per.project.model.DummyPojoImpl  
+	wtf.per.project.model.DummyPojoImpl.<init>()  
+	wtf.per.project.model.DummyPojoImpl.<init>(java.lang.Integer)  
+	wtf.per.project.model.DummyPojoImpl.<init>(java.lang.String)  
+	wtf.per.project.model.DummyPojoImpl.SOME_CONSTANT  
+	wtf.per.project.model.DummyPojoImpl.getName()  
+	wtf.per.project.model.DummyPojoImpl.name  
+	wtf.per.project.model.DummyPojoImpl.setName(java.lang.String)  
+	wtf.per.project.model.DummyPojoImpl.someAbstractMethod()  
+	wtf.per.project.model.DummyPojoImpl.somePrivateMethod()  
+	expected:<0> but was:<15>  
 </code>
 
 
