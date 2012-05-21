@@ -30,13 +30,13 @@ import java.util.TreeSet;
  * @author Alexander Zagniotov (azagniotov@gmail.com)
  * @version 1.0
  */
-public class WTFsPerProject extends BlockJUnit4ClassRunner {
+public final class WTFsPerProject extends BlockJUnit4ClassRunner {
 
    public WTFsPerProject(final Class<?> klass) throws InitializationError {
       super(scanForWTFMetaDataAndPrepareTestClass(klass));
    }
 
-   private static Class<?> scanForWTFMetaDataAndPrepareTestClass(final Class<?> klass) {
+   private static final Class<?> scanForWTFMetaDataAndPrepareTestClass(final Class<?> klass) {
 
       sanityCheck(klass);
       final ScanPackage scanPackageAnnotation = extractScanPackageAnnotationFromClass(klass);
@@ -46,7 +46,7 @@ public class WTFsPerProject extends BlockJUnit4ClassRunner {
       return populateActualValuesForAssertionInTestClass(annotatedFindings, scanPackageAnnotation.value());
    }
 
-   private static void sanityCheck(final Class<?> klass) {
+   private static final void sanityCheck(final Class<?> klass) {
       final Method[] declaredMethods = klass.getDeclaredMethods();
 
       if (declaredMethods != null && declaredMethods.length > 0) {
@@ -59,7 +59,7 @@ public class WTFsPerProject extends BlockJUnit4ClassRunner {
       }
    }
 
-   private static ScanPackage extractScanPackageAnnotationFromClass(final Class<?> klass) {
+   private static final ScanPackage extractScanPackageAnnotationFromClass(final Class<?> klass) {
       final Annotation annotation = klass.getAnnotation(ScanPackage.class);
 
       if (!(annotation instanceof ScanPackage)) {
@@ -74,7 +74,7 @@ public class WTFsPerProject extends BlockJUnit4ClassRunner {
       return (ScanPackage) annotation;
    }
 
-   private static Store gatherWTFAnnotationMetaDataInPackage(final String packageRoot) {
+   private static final Store gatherWTFAnnotationMetaDataInPackage(final String packageRoot) {
 
       final Reflections reflections = new Reflections(new ConfigurationBuilder()
             .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix(packageRoot)))
@@ -89,7 +89,7 @@ public class WTFsPerProject extends BlockJUnit4ClassRunner {
       return reflections.getStore();
    }
 
-   private static SortedSet<String> consolidateAnnotatedFindings(final Store store, final String wtfAnnotationClassName) {
+   private static final SortedSet<String> consolidateAnnotatedFindings(final Store store, final String wtfAnnotationClassName) {
 
       final Set<String> annotatedTopLevelTypes = store.getTypesAnnotatedWith(wtfAnnotationClassName);
       final SortedSet<String> annotatedFindings = new TreeSet<String>(new Comparator<String>() {
@@ -107,7 +107,7 @@ public class WTFsPerProject extends BlockJUnit4ClassRunner {
       return annotatedFindings;
    }
 
-   private static Class<WTFsPerProjectTest> populateActualValuesForAssertionInTestClass(final Set<String> annotatedFindings, final String packageRoot) {
+   private static final Class<WTFsPerProjectTest> populateActualValuesForAssertionInTestClass(final Set<String> annotatedFindings, final String packageRoot) {
       if (annotatedFindings.size() > 0) {
          WTFsPerProjectTest.packageRoot = packageRoot;
          WTFsPerProjectTest.totalFoundWTFs = annotatedFindings.size();
@@ -117,7 +117,7 @@ public class WTFsPerProject extends BlockJUnit4ClassRunner {
       return WTFsPerProjectTest.class;
    }
 
-   private static String buildAssertMessage(final Set<String> foundAnnotatedFindings) {
+   private static final String buildAssertMessage(final Set<String> foundAnnotatedFindings) {
 
       final StringBuilder builder = new StringBuilder();
       for (final String annotatedFind : foundAnnotatedFindings) {

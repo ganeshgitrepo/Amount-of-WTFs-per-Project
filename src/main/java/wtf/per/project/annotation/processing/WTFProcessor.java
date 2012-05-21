@@ -28,13 +28,13 @@ public final class WTFProcessor extends AbstractProcessor {
    private ProcessingEnvironment processingEnvironment;
 
    @Override
-   public synchronized void init(final ProcessingEnvironment processingEnvironment) {
+   public final synchronized void init(final ProcessingEnvironment processingEnvironment) {
       this.processingEnvironment = processingEnvironment;
    }
 
 
    @Override
-   public boolean process(final Set<? extends TypeElement> typeElements, final RoundEnvironment roundEnvironment) {
+   public final boolean process(final Set<? extends TypeElement> typeElements, final RoundEnvironment roundEnvironment) {
       if (!roundEnvironment.processingOver()) {
          for (final TypeElement typeElement : typeElements) {
             final Set<? extends Element> elements = roundEnvironment.getElementsAnnotatedWith(typeElement);
@@ -47,7 +47,7 @@ public final class WTFProcessor extends AbstractProcessor {
       return true;
    }
 
-   private String buildMessage(final Element element) {
+   private final String buildMessage(final Element element) {
 
       final WTF annotation = element.getAnnotation(WTF.class);
       final String annotationMessage = annotation.value();
