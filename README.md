@@ -19,11 +19,11 @@ When source compiles, the compiler generates warning messages using the annotati
 The library also provides custom JUnit test runner scan for all WTFs for a given top level package name and generates
 metrics how many WTFs are there and where. For example, the following is the example of the custom JUnit runner:
 
-<code>
-	@RunWith(WTFsPerProject.class)  
-	@ScanPackage("wtf.per.project")  
-	public final class WTFsPerProjectRunner {  }  
-</code>
+	@RunWith(WTFsPerProject.class) 
+	@ScanPackage("wtf.per.project")
+	public final class WTFsPerProjectRunner {
+	
+	}
 
 I had some POJOs marked with WTF annoation, so the following  is the produced output:
 
