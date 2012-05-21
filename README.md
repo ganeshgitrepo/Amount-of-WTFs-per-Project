@@ -9,17 +9,18 @@ The annotation accepts an arbitary message, if none provided, the default messag
 
 When source compiles, the compiler generates warning messages using the annotation message and the marked element type.
 
-`  Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : CLASS level => WTF?! Are you for real?! This naming convention is bad!
-   Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : FIELD 'SOME_CONSTANT' => WTF?! What is this non-descriptive name?
-   Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : CONSTRUCTOR 'DummyPojoImpl(java.lang.String)' => WTF?! Dude.. WTF?!`
+   Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
+      CLASS level => WTF?! Are you for real?! This naming convention is bad!
+   Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
+      FIELD 'SOME_CONSTANT' => WTF?! What is this non-descriptive name?
+   Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
+      CONSTRUCTOR 'DummyPojoImpl(java.lang.String)' => WTF?! Dude.. WTF?!
 
 The library also provides custom JUnit test runner scan for all WTFs for a given top level package name and generates
 metrics how many WTFs are there and where.
 
-`  junit.framework.AssertionFailedError: 
-
+   junit.framework.AssertionFailedError: 
    Dude.. WTF!? Sources in package [wtf.per.project] are infested with [15] WTFs:
-
    wtf.per.project.model.DummyPojo
    wtf.per.project.model.DummyPojo.someInterfaceMethod()
    wtf.per.project.model.DummyPojoChild.<init>(java.lang.String)
@@ -35,8 +36,7 @@ metrics how many WTFs are there and where.
    wtf.per.project.model.DummyPojoImpl.setName(java.lang.String)
    wtf.per.project.model.DummyPojoImpl.someAbstractMethod()
    wtf.per.project.model.DummyPojoImpl.somePrivateMethod()
-
-   expected:<0> but was:<15>  `
+   expected:<0> but was:<15>
 
 
 Dependencies
