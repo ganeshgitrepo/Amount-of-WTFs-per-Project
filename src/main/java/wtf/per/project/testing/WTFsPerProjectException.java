@@ -9,6 +9,8 @@ package wtf.per.project.testing;
  * @version 1.0
  */
 public final class WTFsPerProjectException extends RuntimeException {
+   private static final long serialVersionUID = 1L;
+
    public WTFsPerProjectException(final String message) {
       super(message);
    }

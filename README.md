@@ -68,8 +68,12 @@ wtf-per-project-x.x-jar-with-dependencies.jar is more than 3.6 MB.
 
 WARNING
 -------
-In my implementation I am using a service provider implementation which is identified by placing a 
-provider-configuration file in the resource directory META-INF/services. As of 20 of May 2012, I am having trouble to
+In my implementation I am using a service provider implementation which is identified by placing a provider-configuration 
+file in the resource directory META-INF/services. With JSR 269, annotation processors are discovered by searching the 
+classpath for the latter file (META-INF/services/javax.annotation.processing.Processor). The contents of this file enumerate 
+available annotation processors (in other words this file is a provider-configuration file). 
+
+As of 20 of May 2012, I am having trouble to
 compile the code via command line using Maven, unlike when I am using IntelliJ which succesfully compiles the code.
 
 The error is:
@@ -81,6 +85,15 @@ The error is:
 I strongly suspect it is a classpath issue and Maven needs to be told where to find annotation processor 
 WTFProcessor class. I need to look into that when I have some free time. Having said that, I dont experience 
 compilation errors when using an IDE.
+
+**UPDATE**
+Apperantly Maven has a bug. The following resource talks about workaround to the problem when Maven cannot find annotation
+processor: http://cdivilly.wordpress.com/2010/03/16/maven-and-jsr-269-annotation-processors/
+
+The workaround is to modify the maven build lifecycle to compile the project in two passes. The first pass compiles 
+just the annotation processors (with annotation processing disabled), the second compiles the rest of the project 
+(with annotation processing enabled). The first pass makes the compiled annotation processors available for 
+the second pass.
 
 How to add support into your application
 ----------------------------------------
