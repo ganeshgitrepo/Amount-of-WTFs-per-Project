@@ -10,7 +10,7 @@ The annotation accepts an arbitary message, if none provided, the default messag
 When source compiles, the compiler generates warning messages using the annotation message and the marked element type.
 
 <code>
-      Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
+      Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] :  
       CLASS level => WTF?! Are you for real?! This naming convention is bad!
    
       Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
@@ -23,32 +23,36 @@ When source compiles, the compiler generates warning messages using the annotati
 The library also provides custom JUnit test runner scan for all WTFs for a given top level package name and generates
 metrics how many WTFs are there and where. For example, the following is the example of the custom JUnit runner:
 
-   @RunWith(WTFsPerProject.class)
-   @ScanPackage("wtf.per.project")
-   public final class WTFsPerProjectRunner {
-
-   }
+<code>
+   @RunWith(WTFsPerProject.class)  
+   @ScanPackage("wtf.per.project")  
+   public final class WTFsPerProjectRunner {  
+     
+   }  
+</code>
 
 I had some POJOs marked with WTF annoation, so the following  is the produced output:
 
-   junit.framework.AssertionFailedError: 
-   Dude.. WTF!? Sources in package [wtf.per.project] are infested with [15] WTFs:
-   wtf.per.project.model.DummyPojo
-   wtf.per.project.model.DummyPojo.someInterfaceMethod()
-   wtf.per.project.model.DummyPojoChild.<init>(java.lang.String)
-   wtf.per.project.model.DummyPojoChild.someAbstractMethod()
-   wtf.per.project.model.DummyPojoChild.thisIsPrivateStaticMethod()
-   wtf.per.project.model.DummyPojoImpl
-   wtf.per.project.model.DummyPojoImpl.<init>()
-   wtf.per.project.model.DummyPojoImpl.<init>(java.lang.Integer)
-   wtf.per.project.model.DummyPojoImpl.<init>(java.lang.String)
-   wtf.per.project.model.DummyPojoImpl.SOME_CONSTANT
-   wtf.per.project.model.DummyPojoImpl.getName()
-   wtf.per.project.model.DummyPojoImpl.name
-   wtf.per.project.model.DummyPojoImpl.setName(java.lang.String)
-   wtf.per.project.model.DummyPojoImpl.someAbstractMethod()
-   wtf.per.project.model.DummyPojoImpl.somePrivateMethod()
-   expected:<0> but was:<15>
+<code>
+   junit.framework.AssertionFailedError:  
+   Dude.. WTF!? Sources in package [wtf.per.project] are infested with [15] WTFs:  
+   wtf.per.project.model.DummyPojo  
+   wtf.per.project.model.DummyPojo.someInterfaceMethod()  
+   wtf.per.project.model.DummyPojoChild.<init>(java.lang.String)  
+   wtf.per.project.model.DummyPojoChild.someAbstractMethod()  
+   wtf.per.project.model.DummyPojoChild.thisIsPrivateStaticMethod()  
+   wtf.per.project.model.DummyPojoImpl  
+   wtf.per.project.model.DummyPojoImpl.<init>()  
+   wtf.per.project.model.DummyPojoImpl.<init>(java.lang.Integer)  
+   wtf.per.project.model.DummyPojoImpl.<init>(java.lang.String)  
+   wtf.per.project.model.DummyPojoImpl.SOME_CONSTANT  
+   wtf.per.project.model.DummyPojoImpl.getName()  
+   wtf.per.project.model.DummyPojoImpl.name  
+   wtf.per.project.model.DummyPojoImpl.setName(java.lang.String)  
+   wtf.per.project.model.DummyPojoImpl.someAbstractMethod()  
+   wtf.per.project.model.DummyPojoImpl.somePrivateMethod()  
+   expected:<0> but was:<15>  
+</code>
 
 
 Dependencies
@@ -66,11 +70,11 @@ provider-configuration file in the resource directory META-INF/services. As of 2
 compile the code via command line using Maven, unlike when I am using IntelliJ which succesfully compiles the code.
 
 The error is:
-"Bad service configuration file, or exception thrown while constructing Processor object: javax.annotation.processing.Processor: 
-Provider wtf.per.project.annotation.processing.WTFProcessor not found". Maven probably needs to be told where
-to find annotation processor WTFProcessor class. I need to look into that.
 
-Having said that, when I compile using IDE, I dont experience compilation errors.
+<code>Bad service configuration file, or exception thrown while constructing Processor object: javax.annotation.processing.Processor: 
+Provider wtf.per.project.annotation.processing.WTFProcessor not found</code>
+Maven probably needs to be told where to find annotation processor WTFProcessor class. I need to look into that. Having 
+said that, when I compile using IDE, I dont experience compilation errors.
 
 How to add support into your application
 ----------------------------------------
