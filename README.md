@@ -9,25 +9,32 @@ The annotation accepts an arbitary message, if none provided, the default messag
 
 When source compiles, the compiler generates warning messages using the annotation message and the marked element type.
 
-<code>Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : CLASS level => WTF?! Are you for real?! This naming convention is bad!
-   Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : FIELD 'SOME_CONSTANT' => WTF?! What is this non-descriptive name?
-   Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : CONSTRUCTOR 'DummyPojoImpl(java.lang.String)' => WTF?! Dude.. WTF?!</code>
+<code>
+	Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
+	CLASS level => WTF?! Are you for real?! This naming convention is bad!
+	
+	Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
+	FIELD 'SOME_CONSTANT' => WTF?! What is this non-descriptive name?
+	
+	Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] : 
+	CONSTRUCTOR 'DummyPojoImpl(java.lang.String)' => WTF?! Dude.. WTF?!
+</code>
 
 The library also provides custom JUnit test runner scan for all WTFs for a given top level package name and generates
 metrics how many WTFs are there and where. For example, the following is the example of the custom JUnit runner:
 
 <code>
-   @RunWith(WTFsPerProject.class)  
-   @ScanPackage("wtf.per.project")  
-   public final class WTFsPerProjectRunner {  
-     
-   }  
+	@RunWith(WTFsPerProject.class)  
+	@ScanPackage("wtf.per.project")  
+	public final class WTFsPerProjectRunner {  
+						
+	}  
 </code>
 
 I had some POJOs marked with WTF annoation, so the following  is the produced output:
 
 <code>
-   junit.framework.AssertionFailedError:  
+	junit.framework.AssertionFailedError:  
    Dude.. WTF!? Sources in package [wtf.per.project] are infested with [15] WTFs:  
    wtf.per.project.model.DummyPojo  
    wtf.per.project.model.DummyPojo.someInterfaceMethod()  
