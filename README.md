@@ -27,27 +27,24 @@ metrics how many WTFs are there and where. For example, the following is the exa
 
 I had some POJOs marked with WTF annoation, so the following  is the produced output:
 
-<code>
 	junit.framework.AssertionFailedError:
 	Dude.. WTF!? Sources in package [wtf.per.project] are infested with [15] WTFs:
 	wtf.per.project.model.DummyPojo
 	wtf.per.project.model.DummyPojo.someInterfaceMethod()
 	wtf.per.project.model.DummyPojoChild.<init>(java.lang.String)
-	wtf.per.project.model.DummyPojoChild.someAbstractMethod()  
-	wtf.per.project.model.DummyPojoChild.thisIsPrivateStaticMethod()  
-	wtf.per.project.model.DummyPojoImpl  
-	wtf.per.project.model.DummyPojoImpl.<init>()  
-	wtf.per.project.model.DummyPojoImpl.<init>(java.lang.Integer)  
-	wtf.per.project.model.DummyPojoImpl.<init>(java.lang.String)  
-	wtf.per.project.model.DummyPojoImpl.SOME_CONSTANT  
-	wtf.per.project.model.DummyPojoImpl.getName()  
-	wtf.per.project.model.DummyPojoImpl.name  
-	wtf.per.project.model.DummyPojoImpl.setName(java.lang.String)  
-	wtf.per.project.model.DummyPojoImpl.someAbstractMethod()  
-	wtf.per.project.model.DummyPojoImpl.somePrivateMethod()  
-	expected:<0> but was:<15>  
-</code>
-
+	wtf.per.project.model.DummyPojoChild.someAbstractMethod()
+	wtf.per.project.model.DummyPojoChild.thisIsPrivateStaticMethod()
+	wtf.per.project.model.DummyPojoImpl
+	wtf.per.project.model.DummyPojoImpl.<init>()
+	wtf.per.project.model.DummyPojoImpl.<init>(java.lang.Integer)
+	wtf.per.project.model.DummyPojoImpl.<init>(java.lang.String) 
+	wtf.per.project.model.DummyPojoImpl.SOME_CONSTANT
+	wtf.per.project.model.DummyPojoImpl.getName()
+	wtf.per.project.model.DummyPojoImpl.name
+	wtf.per.project.model.DummyPojoImpl.setName(java.lang.String)
+	wtf.per.project.model.DummyPojoImpl.someAbstractMethod()
+	wtf.per.project.model.DummyPojoImpl.somePrivateMethod() 
+	expected:<0> but was:<15>
 
 Dependencies
 ------------
@@ -65,8 +62,10 @@ compile the code via command line using Maven, unlike when I am using IntelliJ w
 
 The error is:
 
-<code>Bad service configuration file, or exception thrown while constructing Processor object: javax.annotation.processing.Processor: 
-Provider wtf.per.project.annotation.processing.WTFProcessor not found</code>
+	Bad service configuration file, or exception thrown while constructing Processor object: 
+	javax.annotation.processing.Processor: Provider wtf.per.project.annotation.processing.WTFProcessor 
+	not found
+
 Maven probably needs to be told where to find annotation processor WTFProcessor class. I need to look into that. Having 
 said that, when I compile using IDE, I dont experience compilation errors.
 
