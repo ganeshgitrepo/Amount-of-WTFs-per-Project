@@ -78,8 +78,9 @@ The error is:
 	javax.annotation.processing.Processor: Provider wtf.per.project.annotation.processing.WTFProcessor 
 	not found
 
-Maven probably needs to be told where to find annotation processor WTFProcessor class. I need to look into that. Having 
-said that, when I compile using IDE, I dont experience compilation errors.
+I strongly suspect it is a classpath issue and Maven needs to be told where to find annotation processor 
+WTFProcessor class. I need to look into that when I have some free time. Having said that, I dont experience 
+compilation errors when using an IDE.
 
 How to add support into your application
 ----------------------------------------
