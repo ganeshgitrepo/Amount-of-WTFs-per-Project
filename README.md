@@ -60,7 +60,7 @@ I created this library for fun. Nothing more. If someone actually decides to use
 
 Dependencies
 ------------
-* Java 1.6 (or higher). This will not run on 1.5 and lesser.
+* Java 1.6 (or higher). This will not run on 1.5 or lesser.
 * Reflections project for Java runtime metadata analysis (a fork from Scannotations). It seems that it is too much 
 overhead for what I am trying to do so perhaps in the near future I will implement my own meta data analysis. The
 Reflections library is really great, but because of this size the wtf-per-project-x.x-jar-with-dependencies.jar is more 
