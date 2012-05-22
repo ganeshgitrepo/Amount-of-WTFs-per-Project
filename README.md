@@ -94,5 +94,8 @@ the second pass. Check my POM file.
 
 How to add support into your application
 ----------------------------------------
-Just add the wtf-per-project-x.x-jar-with-dependencies.jar to your classpath and start annotating your source code away.
+Just add the wtf-per-project-x.x.jar to your classpath and start annotating your source code away.
 
+Support
+-------
+Sure. Let me know if you have any problems or you discovered some bugs.
