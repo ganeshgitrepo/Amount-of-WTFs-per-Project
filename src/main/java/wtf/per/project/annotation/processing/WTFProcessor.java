@@ -15,7 +15,7 @@ import java.util.Set;
 
 /**
  * WTF Annotation processor
- *
+ * <p/>
  * Creation Date: 5/19/12, 7:43 PM
  *
  * @author Alexander Zagniotov (azagniotov@gmail.com)
@@ -27,12 +27,19 @@ public final class WTFProcessor extends AbstractProcessor {
 
    private ProcessingEnvironment processingEnvironment;
 
+   /**
+    * @param processingEnvironment
+    */
    @Override
    public final synchronized void init(final ProcessingEnvironment processingEnvironment) {
       this.processingEnvironment = processingEnvironment;
    }
 
-
+   /**
+    * @param typeElements
+    * @param roundEnvironment
+    * @return
+    */
    @Override
    public final boolean process(final Set<? extends TypeElement> typeElements, final RoundEnvironment roundEnvironment) {
       if (!roundEnvironment.processingOver()) {
@@ -47,6 +54,10 @@ public final class WTFProcessor extends AbstractProcessor {
       return true;
    }
 
+   /**
+    * @param element
+    * @return
+    */
    private final String buildMessage(final Element element) {
 
       final WTF annotation = element.getAnnotation(WTF.class);

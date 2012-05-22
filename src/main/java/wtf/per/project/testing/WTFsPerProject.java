@@ -5,25 +5,18 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
-import org.reflections.Reflections;
-import org.reflections.Store;
-import org.reflections.scanners.*;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-import org.reflections.util.FilterBuilder;
 import wtf.per.project.annotation.WTF;
+import wtf.per.project.metadata.MetadataAnalyzer;
 import wtf.per.project.testing.annotation.ScanPackage;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.Comparator;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
- * Custom jUnit Runner class that counts all WTFs across the whole project.
- * The class asserts the results and intentionally fails the assertion if WTFs present.
+ * Custom jUnit Runner class that counts all WTFs within given package and its sub-packages.
+ * The class asserts the results and intentionally fails the assertion if WTFs are present.
  * <p/>
  * Creation Date: 5/19/12, 11:41 PM
  *
@@ -32,20 +25,29 @@ import java.util.TreeSet;
  */
 public final class WTFsPerProject extends BlockJUnit4ClassRunner {
 
+   /**
+    * @param klass
+    * @throws InitializationError
+    */
    public WTFsPerProject(final Class<?> klass) throws InitializationError {
       super(scanForWTFMetaDataAndPrepareTestClass(klass));
    }
 
+   /**
+    * @param klass
+    * @return
+    */
    private static final Class<?> scanForWTFMetaDataAndPrepareTestClass(final Class<?> klass) {
 
       sanityCheck(klass);
       final ScanPackage scanPackageAnnotation = extractScanPackageAnnotationFromClass(klass);
-      final Store metadata = gatherWTFAnnotationMetaDataInPackage(scanPackageAnnotation.value());
-      final SortedSet<String> annotatedFindings = consolidateAnnotatedFindings(metadata, WTF.class.getCanonicalName());
-
+      final SortedSet<String> annotatedFindings = gatherMetadataForAnnotationClass(scanPackageAnnotation.value(), WTF.class);
       return populateActualValuesForAssertionInTestClass(annotatedFindings, scanPackageAnnotation.value());
    }
 
+   /**
+    * @param klass
+    */
    private static final void sanityCheck(final Class<?> klass) {
       final Method[] declaredMethods = klass.getDeclaredMethods();
 
@@ -59,6 +61,10 @@ public final class WTFsPerProject extends BlockJUnit4ClassRunner {
       }
    }
 
+   /**
+    * @param klass
+    * @return
+    */
    private static final ScanPackage extractScanPackageAnnotationFromClass(final Class<?> klass) {
       final Annotation annotation = klass.getAnnotation(ScanPackage.class);
 
@@ -74,37 +80,13 @@ public final class WTFsPerProject extends BlockJUnit4ClassRunner {
       return (ScanPackage) annotation;
    }
 
-   private static final Store gatherWTFAnnotationMetaDataInPackage(final String packageRoot) {
-
-      final Reflections reflections = new Reflections(new ConfigurationBuilder()
-            .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix(packageRoot)))
-            .setUrls(ClasspathHelper.forPackage(packageRoot))
-            .setScanners(new TypesScanner(),
-                  new TypeAnnotationsScanner(),
-                  new ResourcesScanner(),
-                  new SubTypesScanner(),
-                  new MethodAnnotationsScanner(),
-                  new FieldAnnotationsScanner()));
-
-      return reflections.getStore();
-   }
-
-   private static final SortedSet<String> consolidateAnnotatedFindings(final Store store, final String wtfAnnotationClassName) {
-
-      final Set<String> annotatedTopLevelTypes = store.getTypesAnnotatedWith(wtfAnnotationClassName);
-      final SortedSet<String> annotatedFindings = new TreeSet<String>(new Comparator<String>() {
-         public int compare(final String a, final String b) {
-            return a.compareTo(b);
-         }
-      });
-
-      annotatedFindings.addAll(annotatedTopLevelTypes);
-      final boolean honorInheritedClasses = true;
-      annotatedFindings.addAll(store.getInheritedSubTypes(annotatedTopLevelTypes, wtfAnnotationClassName, honorInheritedClasses));
-      annotatedFindings.addAll(store.getMethodsAnnotatedWith(wtfAnnotationClassName));
-      annotatedFindings.addAll(store.getFieldsAnnotatedWith(wtfAnnotationClassName));
-
-      return annotatedFindings;
+   /**
+    * @param packageName
+    * @param annotationClass
+    * @return
+    */
+   private static final SortedSet<String> gatherMetadataForAnnotationClass(final String packageName, final Class<?> annotationClass) {
+      return MetadataAnalyzer.getSortedMetadataFor(packageName, annotationClass);
    }
 
    private static final Class<WTFsPerProjectTest> populateActualValuesForAssertionInTestClass(final Set<String> annotatedFindings, final String packageRoot) {

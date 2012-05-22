@@ -2,6 +2,9 @@ package wtf.per.project.model;
 
 import wtf.per.project.annotation.WTF;
 
+import java.net.URL;
+import java.util.Enumeration;
+
 /**
  * Test model
  * <p/>
@@ -11,7 +14,6 @@ import wtf.per.project.annotation.WTF;
  * @version 1.0
  */
 public final class DummyPojoChild extends DummyPojoImpl {
-
 
    public DummyPojoChild() {
       super();
@@ -30,6 +32,15 @@ public final class DummyPojoChild extends DummyPojoImpl {
 
    @WTF
    private static void thisIsPrivateStaticMethod() {
+
+      @WTF
+      class SomeLocalClass {
+
+      }
+   }
+
+   @WTF
+   private static final class SomeMemberClass {
 
    }
 }

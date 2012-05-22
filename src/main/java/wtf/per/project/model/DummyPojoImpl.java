@@ -2,6 +2,8 @@ package wtf.per.project.model;
 
 import wtf.per.project.annotation.WTF;
 
+import javax.security.auth.login.AccountLockedException;
+
 /**
  * Test model
  * <p/>
@@ -13,6 +15,12 @@ import wtf.per.project.annotation.WTF;
 @WTF("Are you for real?! This naming convention is bad!")
 public abstract class DummyPojoImpl implements DummyPojo {
 
+   @WTF
+   public enum Names {
+
+      ALEX, TOM, MATT;
+   }
+
    @WTF("What is this non-descriptive name?")
    private static final String SOME_CONSTANT = "This is a constant value";
 
@@ -23,6 +31,11 @@ public abstract class DummyPojoImpl implements DummyPojo {
 
    @WTF
    public DummyPojoImpl() {
+
+   }
+
+   @WTF
+   private DummyPojoImpl(final Integer age, final String name) {
 
    }
 
@@ -47,7 +60,7 @@ public abstract class DummyPojoImpl implements DummyPojo {
    }
 
    @WTF
-   public void setName(final String name) {
+   public void setName(final @WTF String name) {
       this.name = name;
    }
 

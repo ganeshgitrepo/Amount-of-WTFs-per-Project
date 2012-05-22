@@ -8,9 +8,12 @@ package wtf.per.project.testing;
  * @author Alexander Zagniotov (azagniotov@gmail.com)
  * @version 1.0
  */
-public final class WTFsPerProjectException extends RuntimeException {
+final class WTFsPerProjectException extends RuntimeException {
    private static final long serialVersionUID = 1L;
 
+   /**
+    * @param message
+    */
    public WTFsPerProjectException(final String message) {
       super(message);
    }
