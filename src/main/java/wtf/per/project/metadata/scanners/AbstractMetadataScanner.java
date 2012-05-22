@@ -23,49 +23,62 @@ abstract class AbstractMetadataScanner {
 
    /**
     * @param elementType
-    * @param relfectableObjects
+    * @param accessibleObjects
     * @param targetAnnotation
     * @return
     */
-   protected final Set<String> getAnnotatedReflectableElements(final String elementType, final AccessibleObject[] relfectableObjects, final Class<?> targetAnnotation) {
+   protected final Set<String> getAnnotatedReflectableElements(final String elementType, final AccessibleObject[] accessibleObjects, Class<?> targetAnnotation) {
 
       final Set<String> metadata = new HashSet<String>();
 
-      for (final AccessibleObject relfectableObject : relfectableObjects)
-         for (final Annotation annotation : relfectableObject.getDeclaredAnnotations()) {
-
-            final Class<?> annotationType = annotation.annotationType();
-            if (annotationType.equals(targetAnnotation)) {
-               final String metaInfo = String.format(MSG_PREFIX_TEMPLATE, elementType, relfectableObject.toString());
-               metadata.add(metaInfo);
-               break;
-            }
-         }
+      for (final AccessibleObject accessibleObject : accessibleObjects) {
+         metadata.add(checkReflectableElementForAnnotation(elementType, accessibleObject, targetAnnotation));
+      }
 
       return metadata;
    }
 
    /**
     * @param elementType
-    * @param relfectableObject
+    * @param accessibleObject
     * @param parameterAnnotations
     * @param targetAnnotation
     * @return
     */
-   protected final Set<String> getAnnotatedReflectableParameters(final String elementType, final AccessibleObject relfectableObject, final Annotation[][] parameterAnnotations, final Class<?> targetAnnotation) {
+   protected final Set<String> getAnnotatedReflectableParameters(final String elementType, final AccessibleObject accessibleObject, final Annotation[][] parameterAnnotations, final Class<?> targetAnnotation) {
       final Set<String> metadata = new HashSet<String>();
 
       for (final Annotation[] annotations : parameterAnnotations) {
-         for (final Annotation annotation : annotations) {
-            final Class<?> annotationType = annotation.annotationType();
-            if (annotationType.equals(targetAnnotation)) {
-               final String metaInfo = String.format(MSG_PREFIX_TEMPLATE, elementType, relfectableObject.toString());
-               metadata.add(metaInfo);
-               break;
-            }
-         }
+         metadata.add(checkReflectableElementForAnnotation(elementType, accessibleObject, annotations, targetAnnotation));
       }
 
       return metadata;
+   }
+
+   /**
+    * @param elementType
+    * @param accessibleObject
+    * @param annotations
+    * @return
+    */
+   private final String checkReflectableElementForAnnotation(final String elementType, final AccessibleObject accessibleObject, final Annotation[] annotations, final Class<?> targetAnnotation) {
+
+      for (final Annotation annotation : annotations) {
+         final Class<?> annotationType = annotation.annotationType();
+         if (annotationType.equals(targetAnnotation)) {
+            return String.format(MSG_PREFIX_TEMPLATE, elementType, accessibleObject.toString());
+         }
+      }
+      return "";
+   }
+
+   /**
+    * @param elementType
+    * @param accessibleObject
+    * @param targetAnnotation @return
+    */
+   private final String checkReflectableElementForAnnotation(final String elementType, final AccessibleObject accessibleObject, Class<?> targetAnnotation) {
+      final Annotation[] annotations = accessibleObject.getAnnotations();
+      return checkReflectableElementForAnnotation(elementType, accessibleObject, annotations, targetAnnotation);
    }
 }

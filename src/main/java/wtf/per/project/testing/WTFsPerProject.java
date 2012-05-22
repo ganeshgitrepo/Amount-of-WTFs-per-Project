@@ -105,7 +105,7 @@ public final class WTFsPerProject extends BlockJUnit4ClassRunner {
       for (final String annotatedFind : foundAnnotatedFindings) {
          builder.append(annotatedFind).append("\n");
       }
-      return builder.append("\n").toString();
+      return builder.append("\n").toString().trim();
    }
 
    /**
