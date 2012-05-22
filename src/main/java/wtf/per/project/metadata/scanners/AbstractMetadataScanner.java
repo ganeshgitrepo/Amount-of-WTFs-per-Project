@@ -77,7 +77,7 @@ abstract class AbstractMetadataScanner {
     * @param accessibleObject
     * @param targetAnnotation @return
     */
-   private final String checkReflectableElementForAnnotation(final String elementType, final AccessibleObject accessibleObject, Class<?> targetAnnotation) {
+   private final String checkReflectableElementForAnnotation(final String elementType, final AccessibleObject accessibleObject, final Class<?> targetAnnotation) {
       final Annotation[] annotations = accessibleObject.getAnnotations();
       return checkReflectableElementForAnnotation(elementType, accessibleObject, annotations, targetAnnotation);
    }
