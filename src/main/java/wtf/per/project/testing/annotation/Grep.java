@@ -15,6 +15,8 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
-public @interface ScanPackage {
-   String value();
+public @interface Grep {
+   String packageName();
+   String classNameFilter() default ".*";
+   Class<?> annotationClass();
 }

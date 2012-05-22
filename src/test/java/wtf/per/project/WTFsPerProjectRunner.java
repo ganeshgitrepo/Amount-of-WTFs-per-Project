@@ -1,8 +1,9 @@
 package wtf.per.project;
 
 import org.junit.runner.RunWith;
+import wtf.per.project.annotation.WTF;
 import wtf.per.project.testing.WTFsPerProject;
-import wtf.per.project.testing.annotation.ScanPackage;
+import wtf.per.project.testing.annotation.Grep;
 
 /**
  * Sample runner
@@ -13,7 +14,8 @@ import wtf.per.project.testing.annotation.ScanPackage;
  * @version 1.0
  */
 @RunWith(WTFsPerProject.class)
-@ScanPackage(WTFsPerProjectRunner.PACKAGE_TO_SCAN)
+//Grep only inner classes
+@Grep(packageName = WTFsPerProjectRunner.PACKAGE_TO_SCAN, classNameFilter = ".*[$].*", annotationClass = WTF.class)
 public final class WTFsPerProjectRunner {
    public static final String PACKAGE_TO_SCAN = "wtf.per.project.model";
 }

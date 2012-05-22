@@ -1,6 +1,7 @@
 package wtf.per.project.metadata.scanners;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,7 +34,13 @@ public final class FieldMetadataScanner extends AbstractMetadataScanner implemen
       final Set<String> metadata = new HashSet<String>();
 
       for (final Class<?> clazzor : targetClasses) {
-         final Field[] fields = clazzor.getDeclaredFields();
+         final Field[] fields;
+         try {
+            fields = clazzor.getDeclaredFields();
+         } catch (NoClassDefFoundError e) {
+            System.out.println("Could not find class definitions for fields in  " + clazzor + ", skipping..");
+            continue;
+         }
          metadata.addAll(getAnnotatedReflectableElements(ElementTypes.FIELD.name(), fields, targetAnnotation));
       }
 

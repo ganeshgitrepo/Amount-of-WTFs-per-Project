@@ -34,7 +34,6 @@ abstract class AbstractMetadataScanner {
       for (final AccessibleObject accessibleObject : accessibleObjects) {
          metadata.add(checkReflectableElementForAnnotation(elementType, accessibleObject, targetAnnotation));
       }
-
       return metadata;
    }
 
@@ -51,7 +50,6 @@ abstract class AbstractMetadataScanner {
       for (final Annotation[] annotations : parameterAnnotations) {
          metadata.add(checkReflectableElementForAnnotation(elementType, accessibleObject, annotations, targetAnnotation));
       }
-
       return metadata;
    }
 

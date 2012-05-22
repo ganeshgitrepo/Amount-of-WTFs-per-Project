@@ -5,9 +5,8 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
-import wtf.per.project.annotation.WTF;
 import wtf.per.project.metadata.MetadataAnalyzer;
-import wtf.per.project.testing.annotation.ScanPackage;
+import wtf.per.project.testing.annotation.Grep;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -40,9 +39,14 @@ public final class WTFsPerProject extends BlockJUnit4ClassRunner {
    private static final Class<?> scanForWTFMetaDataAndPrepareTestClass(final Class<?> klass) {
 
       sanityCheck(klass);
-      final ScanPackage scanPackageAnnotation = extractScanPackageAnnotationFromClass(klass);
-      final SortedSet<String> annotatedFindings = gatherMetadataForAnnotationClass(scanPackageAnnotation.value(), WTF.class);
-      return populateActualValuesForAssertionInTestClass(annotatedFindings, scanPackageAnnotation.value());
+      final Grep grepAnnotation = extractGrepAnnotationFromRunnerClass(klass);
+
+      final String packageName = grepAnnotation.packageName();
+      final String classNameFilter = grepAnnotation.classNameFilter();
+      final Class<?> annotationClass = grepAnnotation.annotationClass();
+
+      final SortedSet<String> annotatedFindings = gatherMetadataInPackageForAnnotation(packageName, classNameFilter, annotationClass);
+      return populateActualValuesForAssertionInTestClass(annotatedFindings, packageName);
    }
 
    /**
@@ -54,7 +58,7 @@ public final class WTFsPerProject extends BlockJUnit4ClassRunner {
       if (declaredMethods != null && declaredMethods.length > 0) {
          throw new WTFsPerProjectException(
                "\n\n" +
-                     "Classes annotated with @ScanPackage(WTFsPerProject.class) must not contain any\n" +
+                     "Classes annotated with @Grep(WTFsPerProject.class) must not contain any\n" +
                      "methods. These class sole purpose is to serve as an entry point for JUnit.\n" +
                      "Offending class: " + klass.getCanonicalName() + "\n"
          );
@@ -65,32 +69,33 @@ public final class WTFsPerProject extends BlockJUnit4ClassRunner {
     * @param klass
     * @return
     */
-   private static final ScanPackage extractScanPackageAnnotationFromClass(final Class<?> klass) {
-      final Annotation annotation = klass.getAnnotation(ScanPackage.class);
+   private static final Grep extractGrepAnnotationFromRunnerClass(final Class<?> klass) {
+      final Annotation annotation = klass.getAnnotation(Grep.class);
 
-      if (!(annotation instanceof ScanPackage)) {
+      if (!(annotation instanceof Grep)) {
          throw new WTFsPerProjectException(
                "\n\n" +
-                     "Classes annotated with @ScanPackage(WTFsPerProject.class) must be annotated\n" +
-                     "with @ScanPackage annotation.\n" +
+                     "Classes annotated with @Grep(WTFsPerProject.class) must be annotated\n" +
+                     "with @Grep annotation.\n" +
                      "Offending class: " + klass.getCanonicalName() + "\n"
          );
       }
 
-      return (ScanPackage) annotation;
+      return (Grep) annotation;
    }
 
    /**
     * @param packageName
-    * @param annotationClass
-    * @return
+    * @param classNameFilter
+    * @param annotationClass @return
     */
-   private static final SortedSet<String> gatherMetadataForAnnotationClass(final String packageName, final Class<?> annotationClass) {
-      return MetadataAnalyzer.getSortedMetadataFor(packageName, annotationClass);
+   private static final SortedSet<String> gatherMetadataInPackageForAnnotation(final String packageName, final String classNameFilter, final Class<?> annotationClass) {
+      return MetadataAnalyzer.getMetadataFor(packageName, annotationClass, classNameFilter);
    }
 
    private static final Class<WTFsPerProjectTest> populateActualValuesForAssertionInTestClass(final Set<String> annotatedFindings, final String packageRoot) {
       if (annotatedFindings.size() > 0) {
+
          WTFsPerProjectTest.packageRoot = packageRoot;
          WTFsPerProjectTest.totalFoundWTFs = annotatedFindings.size();
          WTFsPerProjectTest.locationsOfWTFs = buildAssertMessage(annotatedFindings);
@@ -105,7 +110,7 @@ public final class WTFsPerProject extends BlockJUnit4ClassRunner {
       for (final String annotatedFind : foundAnnotatedFindings) {
          builder.append(annotatedFind).append("\n");
       }
-      return builder.append("\n").toString().trim();
+      return builder.append("\n").toString();
    }
 
    /**

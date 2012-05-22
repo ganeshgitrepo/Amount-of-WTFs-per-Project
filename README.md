@@ -19,17 +19,23 @@ containing WTF annotations:
 	Warning: : In CLASS [wtf.per.project.model.DummyPojoImpl] :
 	CONSTRUCTOR 'DummyPojoImpl(java.lang.String)' => WTF?! Dude.. WTF?!
 
-The library also provides a custom JUnit test runner class. The runner takes a package name through @ScanPackage
-annotation and scans all classes/interfaces under the package and its sub-packages for WTFs occurances. The runner uses 
-a test class internally to assert whether the code is still infested with WTFs. I implemented my own metadata analysis 
-logic in order not to be dependent on third party libraries like Reflections (which is a very good tool btw!)
+The library also provides a custom JUnit test runner class. The runner consumes package name, annotation class and search 
+filter through @Grep annotation (used in conjunction with @RunWith). The runner scans .class files under the 
+given package, its sub-packages and JARs for the given annotation (for example WTF.class) occurances. You can also filter 
+out classes from scanning by providing String regex pattern to @Grep. The runner uses a test class internally to 
+assert whether the code is still infested with WTFs (or any other annotation class set in @Grep). 
 
-If assertion fails (WTFs found present in the code), the test class generates metrics about how many WTFs are there 
-and where. These metrics are part of the assertion failure message. For example, the following is the example of 
-the custom JUnit runner:
+I am using reflection to analyze the .class files within given package, its sub-packages and any JAR files found. 
+At first I was using third party library called 'Reflections' for this task (which is a very good tool btw!), but I ended up 
+dropping it. I did not want to have third party dependencies and implemented my own meta data analysis in order to keep
+the library size small. 
 
-	@RunWith(WTFsPerProject.class) 
-	@ScanPackage("wtf.per.project")
+If runner's test assertion fails (given annotation like @WTF found present in the code), the test class generates 
+metrics about how many WTFs are there and where. These metrics appended to the assertion failure message. 
+For example, the following is the example of the custom JUnit runner:
+
+	@RunWith(WTFsPerProject.class)
+	@Grep(packageName = "wtf.per.project.model", classNameFilter = ".*", annotationClass = WTF.class)
 	public final class WTFsPerProjectRunner {
 	
 	}
@@ -58,6 +64,27 @@ I have few POJOs marked with WTF annoation, so the following is the produced out
 
 	expected:<0> but was:<15>
 
+Another example of the custom JUnit runner:
+
+	@RunWith(WTFsPerProject.class)       
+	//Grep only inner classes                                                                           
+        @Grep(packageName = "wtf.per.project.model", classNameFilter = ".*[$].*", annotationClass = WTF.class)               
+        public final class WTFsPerProjectRunner {                                                                       
+                                                                                                                        
+        }
+
+Output:
+
+	junit.framework.AssertionFailedError: 
+
+	Dude.. WTF!? Sources in package [wtf.per.project.model] are infested with [3] WTFs:
+
+	[ENUM] class wtf.per.project.model.DummyPojoImpl$Names
+	[LOCAL_CLASS] class wtf.per.project.model.DummyPojoChild$1SomeLocalClass
+	[MEMBER_CLASS] class wtf.per.project.model.DummyPojoChild$SomeMemberClass
+
+ 	expected:<0> but was:<3>
+
 Disclaimer
 ----------
 I created this library for fun. Nothing more. If someone actually decides to use it - great.
@@ -84,8 +111,8 @@ If you try to compile the code using Maven, most probably you are going to get t
 	not found
 
 **RESOLUTION**
-Apperantly Maven has a bug. The following resource talks about workaround to the problem when Maven cannot find annotation
-processor: http://cdivilly.wordpress.com/2010/03/16/maven-and-jsr-269-annotation-processors/
+Apperantly Maven has a bug. The following resource talks about workaround to the problem when Maven cannot find 
+annotation processor: http://cdivilly.wordpress.com/2010/03/16/maven-and-jsr-269-annotation-processors/
 
 The workaround is to modify the maven build lifecycle to compile the project in two passes. The first pass compiles 
 just the annotation processors (with annotation processing disabled), the second compiles the rest of the project 

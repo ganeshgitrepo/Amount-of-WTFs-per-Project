@@ -21,7 +21,7 @@ public final class TypeMetadataScannerTest {
    @BeforeClass
    public static void runBeforeClass() {
       try {
-         foundClasses = ClassFinderHelper.forPackage(WTFsPerProjectRunner.PACKAGE_TO_SCAN);
+         foundClasses = ClassFinderHelper.forPackage(WTFsPerProjectRunner.PACKAGE_TO_SCAN, null);
       } catch (IOException e) {
          e.printStackTrace();
       } catch (URISyntaxException e) {

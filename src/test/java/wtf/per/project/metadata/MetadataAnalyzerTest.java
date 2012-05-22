@@ -5,7 +5,6 @@ import org.junit.Test;
 import wtf.per.project.WTFsPerProjectRunner;
 import wtf.per.project.annotation.WTF;
 
-import java.util.Set;
 import java.util.SortedSet;
 
 /**
@@ -15,7 +14,7 @@ public final class MetadataAnalyzerTest {
 
    @Test
    public final void testGetSortedMetadataFor() throws Exception {
-      final SortedSet<String> metadata = MetadataAnalyzer.getSortedMetadataFor(WTFsPerProjectRunner.PACKAGE_TO_SCAN, WTF.class);
+      final SortedSet<String> metadata = MetadataAnalyzer.getMetadataFor(WTFsPerProjectRunner.PACKAGE_TO_SCAN, WTF.class);
       Assert.assertTrue(metadata.size() > 0);
    }
 }

@@ -1,16 +1,16 @@
 package wtf.per.project.metadata;
 
 import junit.framework.Assert;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import wtf.per.project.WTFsPerProjectRunner;
+import wtf.per.project.metadata.filters.ClassNameFilter;
 
 import java.io.File;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Creation Date: 5/21/12, 11:18 AM
@@ -52,7 +52,7 @@ public class ClassFinderHelperTest {
    public void shouldLoadFilesFromResources() throws Exception {
       final Enumeration<URL> resources = ClassFinderHelper.loadResourcesFromSystemPath(systemPath);
       final List<File> directories = ClassFinderHelper.loadFilesFromResources(resources);
-      Assert.assertTrue("The directories must contain at least one element", directories.size() > 0);
+      Assert.assertTrue("The directories must contain one element", directories.size() == 1);
    }
 
    @Test
@@ -94,14 +94,46 @@ public class ClassFinderHelperTest {
    @Test
    public void shouldFindClassesInDirectory() throws Exception {
       final File packageSystemAbsoluteDir =  getAbsolutePathFromCurrentLocationAndPackage(systemPath);
-      final Set<Class<?>> foundClasses = ClassFinderHelper.findClassesInDirectory(packageName, packageSystemAbsoluteDir);
-      Assert.assertTrue("The " + packageSystemAbsoluteDir + " surely contains classes", foundClasses.size() > 0);
+      final Set<Class<?>> foundClasses = ClassFinderHelper.findClassesInDirectory(packageName, packageSystemAbsoluteDir, null);
+      Assert.assertEquals("The " + packageSystemAbsoluteDir + " must contains classes", 10, foundClasses.size());
+   }
+
+   @Test
+   public void shouldFindExactlyOneFilteredClassInDirectory() throws Exception {
+      final File packageSystemAbsoluteDir =  getAbsolutePathFromCurrentLocationAndPackage(systemPath);
+      final ClassNameFilter filter = new ClassNameFilter(packageName + ".Surnames");
+      final Set<Class<?>> foundClasses = ClassFinderHelper.findClassesInDirectory(packageName, packageSystemAbsoluteDir, filter);
+      Assert.assertEquals("The " + packageSystemAbsoluteDir + " must contain one class", 1, foundClasses.size());
+   }
+
+   @Test
+   public void shouldFindFilteredClassesInDirectory() throws Exception {
+      final File packageSystemAbsoluteDir =  getAbsolutePathFromCurrentLocationAndPackage(systemPath);
+      final ClassNameFilter filter = new ClassNameFilter(".*Child");
+      final Set<Class<?>> foundClasses = ClassFinderHelper.findClassesInDirectory(packageName, packageSystemAbsoluteDir, filter);
+      Assert.assertEquals("The " + packageSystemAbsoluteDir + " must contain one class", 1, foundClasses.size());
+   }
+
+   @Test
+   public void shouldFindFilteredInnerClassesInDirectory() throws Exception {
+      final File packageSystemAbsoluteDir =  getAbsolutePathFromCurrentLocationAndPackage(systemPath);
+      final ClassNameFilter filter = new ClassNameFilter(".*[$].*");
+      final Set<Class<?>> foundClasses = ClassFinderHelper.findClassesInDirectory(packageName, packageSystemAbsoluteDir, filter);
+      Assert.assertEquals("The " + packageSystemAbsoluteDir + " must contain three classes", 3, foundClasses.size());
+   }
+
+   @Test
+   public void shouldNotFindFilteredClassesInDirectory() throws Exception {
+      final File packageSystemAbsoluteDir =  getAbsolutePathFromCurrentLocationAndPackage(systemPath);
+      final ClassNameFilter filter = new ClassNameFilter(".*CrazyFilter");
+      final Set<Class<?>> foundClasses = ClassFinderHelper.findClassesInDirectory(packageName, packageSystemAbsoluteDir, filter);
+      Assert.assertEquals("The " + packageSystemAbsoluteDir + " must not contain classes", 0, foundClasses.size());
    }
 
    @Test
    public void shouldFindClassesForPackage() throws Exception {
-      final Set<Class<?>> foundClasses = ClassFinderHelper.forPackage(packageName);
-      Assert.assertTrue("The " + packageName + " surely contains classes", foundClasses.size() > 0);
+      final Set<Class<?>> foundClasses = ClassFinderHelper.forPackage(packageName, null);
+      Assert.assertEquals("The " + packageName + " surely must contain some classes", 10, foundClasses.size());
    }
 
    private File getAbsolutePathFromCurrentLocationAndPackage(final String systemPath) {

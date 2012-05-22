@@ -32,7 +32,13 @@ public final class ConstructorMetadataScanner extends AbstractMetadataScanner im
       final Set<String> metadata = new HashSet<String>();
 
       for (final Class<?> clazzor : targetClasses) {
-         final Constructor[] constructors = clazzor.getDeclaredConstructors();
+         final Constructor[] constructors;
+         try {
+            constructors = clazzor.getDeclaredConstructors();
+         } catch (NoClassDefFoundError e) {
+            System.out.println("Could not find class definitions for constructors parameters in  " + clazzor + ", skipping..");
+            continue;
+         }
 
          metadata.addAll(getAnnotatedReflectableElements(ElementTypes.CONSTRUCTOR.name(), constructors, targetAnnotation));
          for (final Constructor constructor : constructors) {

@@ -32,7 +32,13 @@ public final class MethodMetadataScanner extends AbstractMetadataScanner impleme
       final Set<String> metadata = new HashSet<String>();
 
       for (final Class<?> clazzor : targetClasses) {
-         final Method[] methods = clazzor.getDeclaredMethods();
+         final Method[] methods;
+         try {
+            methods = clazzor.getDeclaredMethods();
+         } catch (NoClassDefFoundError e) {
+            System.out.println("Could not find class definitions for methods parameters in  " + clazzor + ", skipping..");
+            continue;
+         }
 
          metadata.addAll(getAnnotatedReflectableElements(ElementTypes.METHOD.name(), methods, targetAnnotation));
          for (final Method method : methods) {

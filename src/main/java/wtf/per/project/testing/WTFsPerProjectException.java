@@ -1,7 +1,7 @@
 package wtf.per.project.testing;
 
 /**
- * Thrown if classes annotated with @ScanPackage(WTFsPerProject.class) contain @WTF/@Test annotations.
+ * Thrown if classes annotated with @Grep(WTFsPerProject.class) contain @WTF/@Test annotations.
  * <p/>
  * Creation Date: 5/19/12, 11:41 PM
  *
