@@ -44,7 +44,7 @@ I have few POJOs marked with WTF annoation, so the following is the produced out
 
 	junit.framework.AssertionFailedError: 
 	
-	Dude.. WTF!? Sources in package [wtf.per.project.model] are infested with [23] WTFs:
+	Dude.. WTF!? Sources in package [wtf.per.project.model] are infested with [15] WTFs:
 
 	[ANNOTATION] interface wtf.per.project.model.SomeAnnotation
 	[CLASS] class wtf.per.project.model.DummyPojoImpl
