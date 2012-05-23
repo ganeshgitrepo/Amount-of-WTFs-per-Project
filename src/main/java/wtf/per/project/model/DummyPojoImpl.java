@@ -35,7 +35,7 @@ public abstract class DummyPojoImpl implements DummyPojo {
    }
 
    @WTF
-   private DummyPojoImpl(final Integer age, final String name) {
+   private DummyPojoImpl(final Integer age, @WTF final String name) {
 
    }
 
@@ -60,7 +60,7 @@ public abstract class DummyPojoImpl implements DummyPojo {
    }
 
    @WTF
-   public void setName(final @WTF String name) {
+   public void setName(final @WTF String name, final @WTF Integer age) {
       this.name = name;
    }
 

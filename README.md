@@ -21,16 +21,18 @@ containing WTF annotations:
 
 The library also provides a custom JUnit test runner class. The runner consumes package name, annotation class and search 
 filter through @Grep annotation (used in conjunction with @RunWith). The runner scans .class files under the 
-given package, its sub-packages and JARs for the given annotation (for example WTF.class) occurances. You can also filter 
-out classes from scanning by providing String regex pattern to @Grep. The runner uses a test class internally to 
-assert whether the code is still infested with WTFs (or any other annotation class set in @Grep). 
+given package, its sub-packages and JARs for the given annotation (for example WTF.class) occurances. If String regex pattern 
+provided in @Grep, classes are filtered out from being scanned based on the filter. The runner uses a test class 
+internally to assert whether the code is still infested with WTFs (or any other annotation class set in @Grep). 
 
-I am using reflection to analyze the .class files within given package, its sub-packages and any JAR files found. 
-At first I was using third party library called 'Reflections' for this task (which is a very good tool btw!), but I ended up 
-dropping it. I did not want to have third party dependencies and implemented my own meta data analysis in order to keep
-the library size small. 
+The analysis of .class files within given package, its sub-packages and any JAR files found is done using reflection. At 
+first I was using third party library called 'Reflections' for this task (which is a very good tool btw!), but I ended 
+up not using it anymore. I did not want to have third party dependencies and implemented my own meta data analysis in 
+order to keep the library size small and lean. In the near future, I will extract the metadata analysis logic into a 
+separate library. It should be quite flexible since there different .class file scanners in place. For example, scanner for
+constructors only or for method parameters, fields only etc.
 
-If runner's test assertion fails (given annotation like @WTF found present in the code), the test class generates 
+So, if runner's test assertion fails (given annotation like @WTF found present in the code), the test class generates 
 metrics about how many WTFs are there and where. These metrics appended to the assertion failure message. 
 For example, the following is the example of the custom JUnit runner:
 

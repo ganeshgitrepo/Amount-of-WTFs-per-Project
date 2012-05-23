@@ -14,8 +14,7 @@ import wtf.per.project.testing.annotation.Grep;
  * @version 1.0
  */
 @RunWith(WTFsPerProject.class)
-//Grep only inner classes
-@Grep(packageName = WTFsPerProjectRunner.PACKAGE_TO_SCAN, classNameFilter = ".*[$].*", annotationClass = WTF.class)
+@Grep(packageName = WTFsPerProjectRunner.PACKAGE_TO_SCAN, classNameFilter = ".*", annotationClass = WTF.class)
 public final class WTFsPerProjectRunner {
    public static final String PACKAGE_TO_SCAN = "wtf.per.project.model";
 }

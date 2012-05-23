@@ -5,16 +5,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Constructors scanner.
+ * Constructors parameter scanner.
  * <p/>
  * Creation Date: 5/19/12, 11:41 PM
  *
  * @author Alexander Zagniotov (azagniotov@gmail.com)
  * @version 1.0
  */
-public final class ConstructorMetadataScanner extends AbstractMetadataScanner implements Scanner {
+public final class ConstructorParameterMetadataScanner extends AbstractMetadataScanner implements Scanner {
 
-   public ConstructorMetadataScanner() {
+   public ConstructorParameterMetadataScanner() {
 
    }
 
@@ -36,7 +36,9 @@ public final class ConstructorMetadataScanner extends AbstractMetadataScanner im
             continue;
          }
 
-         metadata.addAll(getAnnotatedReflectableElements(ElementTypes.CONSTRUCTOR.name(), constructors, targetAnnotation));
+         for (final Constructor constructor : constructors) {
+            metadata.addAll(getAnnotatedReflectableParameters(ElementTypes.CONSTRUCTOR_PARAMETER.name(), constructor.toString(), constructor.getParameterAnnotations(), targetAnnotation));
+         }
       }
       return metadata;
    }

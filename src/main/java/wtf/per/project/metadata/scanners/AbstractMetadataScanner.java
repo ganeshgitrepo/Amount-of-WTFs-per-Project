@@ -18,7 +18,7 @@ abstract class AbstractMetadataScanner {
    protected static final String MSG_PREFIX_TEMPLATE = "[%s] %s";
 
    protected enum ElementTypes {
-      FIELD, METHOD, PARAMETER, CONSTRUCTOR, ENUM, INTERFACE, CLASS, MEMBER_CLASS, LOCAL_CLASS, ANNOTATION, ANONYMOUS_CLASS
+      FIELD, METHOD, CONSTRUCTOR_PARAMETER, CONSTRUCTOR, ENUM, INTERFACE, CLASS, MEMBER_CLASS, LOCAL_CLASS, ANNOTATION, METHOD_PARAMETER, ANONYMOUS_CLASS
    }
 
    /**
@@ -27,7 +27,7 @@ abstract class AbstractMetadataScanner {
     * @param targetAnnotation
     * @return
     */
-   protected final Set<String> getAnnotatedReflectableElements(final String elementType, final AccessibleObject[] accessibleObjects, Class<?> targetAnnotation) {
+   protected final Set<String> getAnnotatedReflectableElements(final String elementType, final AccessibleObject[] accessibleObjects, final Class<?> targetAnnotation) {
 
       final Set<String> metadata = new HashSet<String>();
 
@@ -38,37 +38,24 @@ abstract class AbstractMetadataScanner {
    }
 
    /**
+    *
     * @param elementType
-    * @param accessibleObject
+    * @param accessibleObjectName
     * @param parameterAnnotations
     * @param targetAnnotation
     * @return
     */
-   protected final Set<String> getAnnotatedReflectableParameters(final String elementType, final AccessibleObject accessibleObject, final Annotation[][] parameterAnnotations, final Class<?> targetAnnotation) {
+   protected final Set<String> getAnnotatedReflectableParameters(final String elementType, final String accessibleObjectName, final Annotation[][] parameterAnnotations, final Class<?> targetAnnotation) {
       final Set<String> metadata = new HashSet<String>();
 
-      for (final Annotation[] annotations : parameterAnnotations) {
-         metadata.add(checkReflectableElementForAnnotation(elementType, accessibleObject, annotations, targetAnnotation));
+      for (int idx = 0; idx < parameterAnnotations.length; idx++) {
+         final Annotation[] annotations = parameterAnnotations[idx];
+         final String message = String.format("#%s %s", (idx + 1), accessibleObjectName);
+         metadata.add(checkReflectableElementForAnnotation(elementType, message, annotations, targetAnnotation));
       }
       return metadata;
    }
 
-   /**
-    * @param elementType
-    * @param accessibleObject
-    * @param annotations
-    * @return
-    */
-   private final String checkReflectableElementForAnnotation(final String elementType, final AccessibleObject accessibleObject, final Annotation[] annotations, final Class<?> targetAnnotation) {
-
-      for (final Annotation annotation : annotations) {
-         final Class<?> annotationType = annotation.annotationType();
-         if (annotationType.equals(targetAnnotation)) {
-            return String.format(MSG_PREFIX_TEMPLATE, elementType, accessibleObject.toString());
-         }
-      }
-      return "";
-   }
 
    /**
     * @param elementType
@@ -77,6 +64,25 @@ abstract class AbstractMetadataScanner {
     */
    private final String checkReflectableElementForAnnotation(final String elementType, final AccessibleObject accessibleObject, final Class<?> targetAnnotation) {
       final Annotation[] annotations = accessibleObject.getAnnotations();
-      return checkReflectableElementForAnnotation(elementType, accessibleObject, annotations, targetAnnotation);
+      return checkReflectableElementForAnnotation(elementType, accessibleObject.toString(), annotations, targetAnnotation);
+   }
+
+   /**
+    *
+    * @param elementType
+    * @param accessibleObjectName
+    * @param annotations
+    * @param targetAnnotation
+    * @return
+    */
+   private final String checkReflectableElementForAnnotation(final String elementType, final String accessibleObjectName, final Annotation[] annotations, final Class<?> targetAnnotation) {
+
+      for (final Annotation annotation : annotations) {
+         final Class<?> annotationType = annotation.annotationType();
+         if (annotationType.equals(targetAnnotation)) {
+            return String.format(MSG_PREFIX_TEMPLATE, elementType, accessibleObjectName);
+         }
+      }
+      return "";
    }
 }

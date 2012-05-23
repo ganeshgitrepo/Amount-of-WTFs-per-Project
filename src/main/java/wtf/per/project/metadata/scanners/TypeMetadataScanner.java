@@ -14,21 +14,17 @@ import java.util.Set;
  */
 public final class TypeMetadataScanner extends AbstractMetadataScanner implements Scanner {
 
-   private final Set<Class<?>> targetClasses;
+   public TypeMetadataScanner() {
 
-   /**
-    * @param targetClasses
-    */
-   public TypeMetadataScanner(final Set<Class<?>> targetClasses) {
-      this.targetClasses = targetClasses;
    }
 
    /**
+    * @param targetClasses
     * @param targetAnnotation
     * @return
     */
    @Override
-   public final Set<String> getMetadataFor(final Class<?> targetAnnotation) {
+   public final Set<String> getMetadataFor(final Set<Class<?>> targetClasses, final Class<?> targetAnnotation) {
       final Set<String> metadata = new HashSet<String>();
 
       for (final Class<?> clazzor : targetClasses) {

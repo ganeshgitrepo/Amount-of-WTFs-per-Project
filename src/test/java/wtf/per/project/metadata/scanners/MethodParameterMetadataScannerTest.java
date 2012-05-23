@@ -12,10 +12,9 @@ import java.net.URISyntaxException;
 import java.util.Set;
 
 /**
- * Creation Date: 5/21/12, 4:44 PM
+ * Creation Date: 5/22/12, 6:52 PM
  */
-public final class TypeMetadataScannerTest {
-
+public class MethodParameterMetadataScannerTest {
    private static Set<Class<?>> foundClasses;
 
    @BeforeClass
@@ -32,9 +31,9 @@ public final class TypeMetadataScannerTest {
    }
 
    @Test
-   public void testGetFieldMetadata() throws Exception {
-      final TypeMetadataScanner scanner = new TypeMetadataScanner();
+   public void testGetMethodrMetadata() throws Exception {
+      final MethodParameterMetadataScanner scanner = new MethodParameterMetadataScanner();
       Set<String> foundMetadata = scanner.getMetadataFor(foundClasses, WTF.class);
-      Assert.assertEquals(8, foundMetadata.size());
+      Assert.assertEquals(3, foundMetadata.size());
    }
 }

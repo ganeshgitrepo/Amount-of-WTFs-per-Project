@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
 import wtf.per.project.metadata.MetadataAnalyzer;
+import wtf.per.project.metadata.scanners.*;
 import wtf.per.project.testing.annotation.Grep;
 
 import java.lang.annotation.Annotation;
@@ -90,7 +91,18 @@ public final class WTFsPerProject extends BlockJUnit4ClassRunner {
     * @param annotationClass @return
     */
    private static final SortedSet<String> gatherMetadataInPackageForAnnotation(final String packageName, final String classNameFilter, final Class<?> annotationClass) {
-      return MetadataAnalyzer.getMetadataFor(packageName, annotationClass, classNameFilter);
+
+      //This is the shorter version
+      //return MetadataAnalyzer.getMetadataFor(packageName, annotationClass, classNameFilter);
+
+      return MetadataAnalyzer.getMetadataFor(packageName, annotationClass,
+            new TypeMetadataScanner(),
+            new ConstructorMetadataScanner(),
+            new ConstructorParameterMetadataScanner(),
+            new MethodMetadataScanner(),
+            new MethodParameterMetadataScanner(),
+            new FieldMetadataScanner());
+
    }
 
    private static final Class<WTFsPerProjectTest> populateActualValuesForAssertionInTestClass(final Set<String> annotatedFindings, final String packageRoot) {

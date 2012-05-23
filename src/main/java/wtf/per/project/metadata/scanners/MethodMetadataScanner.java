@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Methods and their parameters scanner.
+ * Methods scanner.
  * <p/>
  * Creation Date: 5/19/12, 11:41 PM
  *
@@ -14,21 +14,17 @@ import java.util.Set;
  */
 public final class MethodMetadataScanner extends AbstractMetadataScanner implements Scanner {
 
-   private final Set<Class<?>> targetClasses;
+   public MethodMetadataScanner() {
 
-   /**
-    * @param targetClasses
-    */
-   public MethodMetadataScanner(final Set<Class<?>> targetClasses) {
-      this.targetClasses = targetClasses;
    }
 
    /**
+    * @param targetClasses
     * @param targetAnnotation
     * @return
     */
    @Override
-   public final Set<String> getMetadataFor(final Class<?> targetAnnotation) {
+   public final Set<String> getMetadataFor(final Set<Class<?>> targetClasses, final Class<?> targetAnnotation) {
       final Set<String> metadata = new HashSet<String>();
 
       for (final Class<?> clazzor : targetClasses) {
@@ -41,9 +37,6 @@ public final class MethodMetadataScanner extends AbstractMetadataScanner impleme
          }
 
          metadata.addAll(getAnnotatedReflectableElements(ElementTypes.METHOD.name(), methods, targetAnnotation));
-         for (final Method method : methods) {
-            metadata.addAll(getAnnotatedReflectableParameters(ElementTypes.PARAMETER.name(), method, method.getParameterAnnotations(), targetAnnotation));
-         }
       }
 
       return metadata;

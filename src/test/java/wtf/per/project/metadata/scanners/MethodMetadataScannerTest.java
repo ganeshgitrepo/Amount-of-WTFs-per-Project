@@ -33,8 +33,8 @@ public final class MethodMetadataScannerTest {
 
    @Test
    public void testGetMethodrMetadata() throws Exception {
-      final MethodMetadataScanner scanner = new MethodMetadataScanner(foundClasses);
-      Set<String> foundMetadata = scanner.getMetadataFor(WTF.class);
-      Assert.assertTrue(foundMetadata.size() > 0);
+      final MethodMetadataScanner scanner = new MethodMetadataScanner();
+      Set<String> foundMetadata = scanner.getMetadataFor(foundClasses, WTF.class);
+      Assert.assertEquals(9, foundMetadata.size());
    }
 }

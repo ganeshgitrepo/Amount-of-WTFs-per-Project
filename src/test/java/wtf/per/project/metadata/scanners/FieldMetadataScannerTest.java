@@ -33,8 +33,8 @@ public final class FieldMetadataScannerTest {
 
    @Test
    public void testGetFieldMetadata() throws Exception {
-      final FieldMetadataScanner scanner = new FieldMetadataScanner(foundClasses);
-      Set<String> foundMetadata = scanner.getMetadataFor(WTF.class);
-      Assert.assertTrue(foundMetadata.size() > 0);
+      final FieldMetadataScanner scanner = new FieldMetadataScanner();
+      Set<String> foundMetadata = scanner.getMetadataFor(foundClasses, WTF.class);
+      Assert.assertEquals(4, foundMetadata.size());
    }
 }

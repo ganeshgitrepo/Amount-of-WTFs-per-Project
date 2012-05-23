@@ -1,7 +1,6 @@
 package wtf.per.project.metadata.scanners;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,21 +15,17 @@ import java.util.Set;
  */
 public final class FieldMetadataScanner extends AbstractMetadataScanner implements Scanner {
 
-   private final Set<Class<?>> targetClasses;
+   public FieldMetadataScanner() {
 
-   /**
-    * @param targetClasses
-    */
-   public FieldMetadataScanner(final Set<Class<?>> targetClasses) {
-      this.targetClasses = targetClasses;
    }
 
    /**
+    * @param targetClasses
     * @param targetAnnotation
     * @return
     */
    @Override
-   public final Set<String> getMetadataFor(final Class<?> targetAnnotation) {
+   public final Set<String> getMetadataFor(final Set<Class<?>> targetClasses, final Class<?> targetAnnotation) {
       final Set<String> metadata = new HashSet<String>();
 
       for (final Class<?> clazzor : targetClasses) {

@@ -33,8 +33,8 @@ public final class ConstructorMetadataScannerTest {
 
    @Test
    public void testGetConstructorMetadata() throws Exception {
-      final ConstructorMetadataScanner scanner = new ConstructorMetadataScanner(foundClasses);
-      Set<String> foundMetadata = scanner.getMetadataFor(WTF.class);
-      Assert.assertTrue(foundMetadata.size() > 0);
+      final ConstructorMetadataScanner scanner = new ConstructorMetadataScanner();
+      Set<String> foundMetadata = scanner.getMetadataFor(foundClasses, WTF.class);
+      Assert.assertEquals(6, foundMetadata.size());
    }
 }
