@@ -45,26 +45,30 @@ For example, the following is the example of the custom JUnit runner:
 I have few POJOs marked with WTF annoation, so the following is the produced output after running the above class:
 
 	junit.framework.AssertionFailedError: 
-	
-	Dude.. WTF!? Sources in package [wtf.per.project.model] are infested with [15] WTFs:
+
+	Dude.. WTF!? Sources in package [wtf.per.project.model] are infested with [19] WTFs:
 
 	[ANNOTATION] interface wtf.per.project.model.SomeAnnotation
 	[CLASS] class wtf.per.project.model.DummyPojoImpl
 	[CONSTRUCTOR] private wtf.per.project.model.DummyPojoImpl(java.lang.Integer,java.lang.String)
 	[CONSTRUCTOR] public wtf.per.project.model.DummyPojoChild(java.lang.String)
-	[CONSTRUCTOR] public wtf.per.project.model.DummyPojoImpl()
-	[CONSTRUCTOR] public wtf.per.project.model.DummyPojoImpl(java.lang.Integer)
-	[CONSTRUCTOR] public wtf.per.project.model.DummyPojoImpl(java.lang.String)
+	[CONSTRUCTOR_PARAMETER] #2 private wtf.per.project.model.DummyPojoImpl(java.lang.Integer,java.lang.String)
 	[ENUM] class wtf.per.project.model.DummyPojoImpl$Names
 	[ENUM] class wtf.per.project.model.Surnames
 	[FIELD] private java.lang.String wtf.per.project.model.DummyPojoImpl.name
 	[FIELD] private static final java.lang.String wtf.per.project.model.DummyPojoImpl.SOME_CONSTANT
 	[FIELD] public static final wtf.per.project.model.Surnames wtf.per.project.model.Surnames.JOHNSON
-	[INTERFACE] interface wtf.per.project.model.DummyPojo	
+	[INTERFACE] interface wtf.per.project.model.DummyPojo
+	[INTERFACE] interface wtf.per.project.model.submodel.DummySubmodelPojo
+	[LOCAL_CLASS] class wtf.per.project.model.DummyPojoChild$1SomeLocalClass
+	[MEMBER_CLASS] class wtf.per.project.model.DummyPojoChild$SomeMemberClass
+	[METHOD] private static void wtf.per.project.model.DummyPojoChild.thisIsPrivateStaticMethod()
 	[METHOD] private void wtf.per.project.model.DummyPojoImpl.somePrivateMethod()
-	[PARAMETER] public void wtf.per.project.model.DummyPojoImpl.setName(java.lang.String)
+	[METHOD] public void wtf.per.project.model.DummyPojoImpl.setName(java.lang.String,java.lang.Integer)
+	[METHOD_PARAMETER] #1 public void wtf.per.project.model.DummyPojoImpl.setName(java.lang.String,java.lang.Integer)
+	[METHOD_PARAMETER] #2 public void wtf.per.project.model.DummyPojoImpl.setName(java.lang.String,java.lang.Integer)
 
-	expected:<0> but was:<15>
+	expected:<0> but was:<19>
 
 Another example of the custom JUnit runner:
 
