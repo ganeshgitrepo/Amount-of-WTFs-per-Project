@@ -25,8 +25,9 @@ given package, its sub-packages and JARs for the given annotation (for example W
 provided in @Grep, classes are filtered out from being scanned based on the filter. The runner uses a test class 
 internally to assert whether the code is still infested with WTFs (or any other annotation class set in @Grep). 
 
-The analysis of .class files within given package, its sub-packages and any JAR files found, is done using byte code
-analysis. In other words, the scanning is done without loading classes into JVM PermGen Space and wasting resources.
+The scanning of .class files within given package, its sub-packages and any JAR files found, is done using byte code
+analysis instead of reflection. In other words, the scanning is done without loading classes into JVM PermGen Space 
+and wasting resources.
 
 So, if runner's test assertion fails (given annotation like @WTF found present in the code), the test class generates 
 metrics about how many WTFs are there and where. These metrics appended to the assertion failure message. 
