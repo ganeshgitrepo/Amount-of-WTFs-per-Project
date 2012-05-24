@@ -1,12 +1,12 @@
 package wtf.per.project.testing;
 
 
+import com.initbinder.metadata.analyzer.MetadataAnalyzer;
+import com.initbinder.metadata.scanners.*;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
-import wtf.per.project.metadata.MetadataAnalyzer;
-import wtf.per.project.metadata.scanners.*;
 import wtf.per.project.testing.annotation.Grep;
 
 import java.lang.annotation.Annotation;
