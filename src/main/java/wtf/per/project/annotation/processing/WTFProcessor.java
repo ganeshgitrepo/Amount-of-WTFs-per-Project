@@ -58,12 +58,12 @@ public final class WTFProcessor extends AbstractProcessor {
     * @param element
     * @return
     */
-   private final String buildMessage(final Element element) {
+   private String buildMessage(final Element element) {
 
       final WTF annotation = element.getAnnotation(WTF.class);
       final String annotationMessage = annotation.value();
       final String canonicalClassName = element.getEnclosingElement().toString();
-      final List<ElementKind> topLevelKinds = Arrays.asList(new ElementKind[]{ElementKind.CLASS, ElementKind.ENUM, ElementKind.INTERFACE});
+      final List<ElementKind> topLevelKinds = Arrays.asList(ElementKind.CLASS, ElementKind.ENUM, ElementKind.INTERFACE);
       final String messageTemplateSuffix = " => WTF?! %s";
 
       if (topLevelKinds.contains(element.getKind())) {

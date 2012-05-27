@@ -37,7 +37,7 @@ public final class WTFsPerProject extends BlockJUnit4ClassRunner {
     * @param klass
     * @return
     */
-   private static final Class<?> scanForWTFMetaDataAndPrepareTestClass(final Class<?> klass) {
+   private static Class<?> scanForWTFMetaDataAndPrepareTestClass(final Class<?> klass) {
 
       sanityCheck(klass);
       final Grep grepAnnotation = extractGrepAnnotationFromRunnerClass(klass);
@@ -53,7 +53,7 @@ public final class WTFsPerProject extends BlockJUnit4ClassRunner {
    /**
     * @param klass
     */
-   private static final void sanityCheck(final Class<?> klass) {
+   private static void sanityCheck(final Class<?> klass) {
       final Method[] declaredMethods = klass.getDeclaredMethods();
 
       if (declaredMethods != null && declaredMethods.length > 0) {
@@ -70,7 +70,7 @@ public final class WTFsPerProject extends BlockJUnit4ClassRunner {
     * @param klass
     * @return
     */
-   private static final Grep extractGrepAnnotationFromRunnerClass(final Class<?> klass) {
+   private static Grep extractGrepAnnotationFromRunnerClass(final Class<?> klass) {
       final Annotation annotation = klass.getAnnotation(Grep.class);
 
       if (!(annotation instanceof Grep)) {
@@ -90,7 +90,7 @@ public final class WTFsPerProject extends BlockJUnit4ClassRunner {
     * @param classNameFilter
     * @param annotationClass @return
     */
-   private static final SortedSet<String> gatherMetadataInPackageForAnnotation(final String packageName, final String classNameFilter, final Class<?> annotationClass) {
+   private static SortedSet<String> gatherMetadataInPackageForAnnotation(final String packageName, final String classNameFilter, final Class<?> annotationClass) {
 
       //This is the shorter version
       //return MetadataAnalyzer.getMetadataFor(packageName, annotationClass, classNameFilter);
@@ -105,7 +105,7 @@ public final class WTFsPerProject extends BlockJUnit4ClassRunner {
 
    }
 
-   private static final Class<WTFsPerProjectTest> populateActualValuesForAssertionInTestClass(final Set<String> annotatedFindings, final String packageRoot) {
+   private static Class<WTFsPerProjectTest> populateActualValuesForAssertionInTestClass(final Set<String> annotatedFindings, final String packageRoot) {
       if (annotatedFindings.size() > 0) {
 
          WTFsPerProjectTest.packageRoot = packageRoot;
@@ -116,7 +116,7 @@ public final class WTFsPerProject extends BlockJUnit4ClassRunner {
       return WTFsPerProjectTest.class;
    }
 
-   private static final String buildAssertMessage(final Set<String> foundAnnotatedFindings) {
+   private static String buildAssertMessage(final Set<String> foundAnnotatedFindings) {
 
       final StringBuilder builder = new StringBuilder();
       for (final String annotatedFind : foundAnnotatedFindings) {
